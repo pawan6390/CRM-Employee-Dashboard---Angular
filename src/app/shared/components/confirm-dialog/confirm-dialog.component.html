@@ -1,0 +1,10 @@
+<div class="modal-backdrop-custom" *ngIf="visible()">
+  <div class="modal-card">
+    <h5 class="modal-card__title">{{ title() }}</h5>
+    <p class="modal-card__message">{{ message() }}</p>
+    <div class="modal-card__actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelled.emit()">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="confirmed.emit()">{{ confirmLabel() }}</button>
+    </div>
+  </div>
+</div>

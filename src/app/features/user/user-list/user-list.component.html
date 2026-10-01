@@ -1,0 +1,67 @@
+<div class="page-heading">
+  <h1>Users</h1>
+  <a routerLink="/users/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add User</a>
+</div>
+
+<div class="card-surface p-3">
+  <div class="table-toolbar">
+    <input type="text" class="form-control search-input" placeholder="Search users..." [ngModel]="searchTerm()"
+      (ngModelChange)="onSearchChange($event)" />
+    <div class="ms-auto text-muted small">{{ totalItems() }} users</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (loading()) {
+        <tr>
+          <td colspan="5" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </td>
+        </tr>
+        } @else {
+        @for (user of users(); track user.id) {
+        <tr>
+          <td class="fw-semibold">{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <span class="status-badge" [class.status-badge--active]="user.isActive"
+              [class.status-badge--terminated]="!user.isActive">
+              {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="text-end">
+            <a [routerLink]="['/users', user.id, 'edit']" class="btn btn-sm btn-outline-secondary me-1">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="confirmDelete(user)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4">No users found.</td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination [currentPage]="page()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)" />
+</div>
+
+<app-confirm-dialog [visible]="!!deleteTarget()" title="Delete user"
+  [message]="'Delete ' + (deleteTarget()?.name ?? '') + '? This cannot be undone.'" (confirmed)="performDelete()"
+  (cancelled)="cancelDelete()" />

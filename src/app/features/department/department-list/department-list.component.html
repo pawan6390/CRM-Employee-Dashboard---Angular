@@ -1,0 +1,62 @@
+<div class="page-heading">
+  <h1>Departments</h1>
+  <a routerLink="/departments/new" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Department</a>
+</div>
+
+<div class="card-surface p-3">
+  <div class="table-toolbar">
+    <input type="text" class="form-control search-input" placeholder="Search departments..." [ngModel]="searchTerm()"
+      (ngModelChange)="onSearchChange($event)" />
+    <div class="ms-auto text-muted small">{{ totalItems() }} departments</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Code</th>
+          <th>Manager</th>
+          <th>Employees</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (loading()) {
+        <tr>
+          <td colspan="5" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </td>
+        </tr>
+        } @else {
+        @for (dept of departments(); track dept.id) {
+        <tr>
+          <td class="fw-semibold">{{ dept.name }}</td>
+          <td><span class="badge text-bg-light border">{{ dept.code }}</span></td>
+          <td>{{ dept.managerName || '—' }}</td>
+          <td>{{ dept.employeeCount ?? 0 }}</td>
+          <td class="text-end">
+            <a [routerLink]="['/departments', dept.id, 'edit']" class="btn btn-sm btn-outline-secondary me-1">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="confirmDelete(dept)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="5" class="text-center text-muted py-4">No departments found.</td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination [currentPage]="page()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)" />
+</div>
+
+<app-confirm-dialog [visible]="!!deleteTarget()" title="Delete department"
+  [message]="'Delete ' + (deleteTarget()?.name ?? '') + '? Employees must be reassigned first.'"
+  (confirmed)="performDelete()" (cancelled)="cancelDelete()" />

@@ -1,0 +1,99 @@
+<div class="page-heading">
+  <h1>Settings</h1>
+</div>
+
+<div class="row g-3">
+
+  <div class="col-lg-6">
+    <div class="card-surface p-4">
+      <h6 class="mb-3">Theme</h6>
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <div class="fw-semibold">Dark mode</div>
+          <div class="text-muted small">Switch between light and dark appearance.</div>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" [checked]="isDark()" (change)="toggleTheme()" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-6">
+    <div class="card-surface p-4">
+      <h6 class="mb-3">Notifications</h6>
+
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <div class="fw-semibold">Enable notifications</div>
+          <div class="text-muted small">Master switch for all notification channels.</div>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" [ngModel]="notificationsEnabled()"
+            (ngModelChange)="notificationsEnabled.set($event)" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email digest frequency</label>
+        <select class="form-select" [ngModel]="emailFrequency()" (ngModelChange)="emailFrequency.set($event)"
+          [disabled]="!notificationsEnabled()">
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="never">Never</option>
+        </select>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <span>Push notifications</span>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" [disabled]="!notificationsEnabled()"
+            [ngModel]="pushEnabled()" (ngModelChange)="pushEnabled.set($event)" />
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between">
+        <span>SMS notifications</span>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" [disabled]="!notificationsEnabled()"
+            [ngModel]="smsEnabled()" (ngModelChange)="smsEnabled.set($event)" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-6">
+    <div class="card-surface p-4">
+      <h6 class="mb-3">Preferences</h6>
+
+      <div class="mb-3">
+        <label class="form-label">Language</label>
+        <select class="form-select" [ngModel]="language()" (ngModelChange)="language.set($event)">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Default page size</label>
+        <select class="form-select" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event)">
+          <option [ngValue]="10">10 per page</option>
+          <option [ngValue]="25">25 per page</option>
+          <option [ngValue]="50">50 per page</option>
+        </select>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between">
+        <span>Compact table rows</span>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" [ngModel]="compactMode()"
+            (ngModelChange)="compactMode.set($event)" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

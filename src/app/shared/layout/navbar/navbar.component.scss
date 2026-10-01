@@ -1,0 +1,85 @@
+@use '../../../../styles/variables' as v;
+
+.app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: v.$navbar-height;
+  background: var(--app-surface);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--app-border);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 1030;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--app-accent, v.$color-primary);
+    font-size: 1.1rem;
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+
+  &__user {
+    position: relative;
+  }
+
+  &__user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0.6rem;
+    border-radius: v.$radius-md;
+
+    &:hover {
+      background: var(--app-accent-soft, rgba(79, 70, 229, 0.08));
+    }
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--app-accent-soft, rgba(79, 70, 229, 0.2));
+  }
+
+  &__dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
+    border-radius: v.$radius-md;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    min-width: 190px;
+    padding: 0.4rem;
+  }
+}
+
+.dropdown-item-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: none;
+  background: transparent;
+  border-radius: v.$radius-sm;
+  text-align: left;
+  color: var(--app-text);
+
+  &:hover {
+    background: var(--app-accent-soft, rgba(79, 70, 229, 0.08));
+  }
+}

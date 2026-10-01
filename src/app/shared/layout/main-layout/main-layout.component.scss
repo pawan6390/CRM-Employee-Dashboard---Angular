@@ -1,0 +1,20 @@
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
+
+.app-content {
+  margin-left: v.$sidebar-width;
+  margin-top: v.$navbar-height;
+  min-height: calc(100vh - #{v.$navbar-height});
+  background: transparent;
+  transition: margin-left 0.2s ease;
+  padding: 0.35rem 0 1.5rem;
+
+  &--collapsed {
+    margin-left: v.$sidebar-width-collapsed;
+  }
+
+  @include m.respond-below(v.$bp-md) {
+    margin-left: 0;
+    padding: 0.25rem 0 1rem;
+  }
+}

@@ -1,0 +1,118 @@
+<div class="page-heading">
+  <h1>Dashboard</h1>
+</div>
+
+@if (loading()) {
+<div class="text-center py-5">
+  <div class="spinner-border text-primary" role="status"></div>
+</div>
+} @else {
+
+<div class="row g-3 mb-4">
+  @for (card of statCards(); track card.label) {
+  <div class="col-6 col-md-3">
+    <div class="stat-card card-surface">
+      <div class="stat-card__icon" [style.background]="card.color + '1a'" [style.color]="card.color">
+        <i class="bi" [class]="card.icon"></i>
+      </div>
+      <div>
+        <div class="stat-card__value">{{ card.value }}</div>
+        <div class="stat-card__label">{{ card.label }}</div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+
+<div class="row g-3 mb-4">
+  <div class="col-lg-6">
+    <div class="card-surface p-3">
+      <h6 class="mb-3">Employees by Department</h6>
+      <div class="bar-chart">
+        @for (point of departmentChart(); track point.label) {
+        <div class="bar-chart__row">
+          <span class="bar-chart__label">{{ point.label }}</span>
+          <div class="bar-chart__track">
+            <div class="bar-chart__fill" [style.width.%]="(point.value / maxDepartmentValue()) * 100"></div>
+          </div>
+          <span class="bar-chart__value">{{ point.value }}</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card-surface p-3">
+      <h6 class="mb-3">New Hires (Last 6 Months)</h6>
+      <div class="bar-chart">
+        @for (point of hiresChart(); track point.label) {
+        <div class="bar-chart__row">
+          <span class="bar-chart__label">{{ point.label }}</span>
+          <div class="bar-chart__track">
+            <div class="bar-chart__fill bar-chart__fill--alt" [style.width.%]="(point.value / maxHiresValue()) * 100">
+            </div>
+          </div>
+          <span class="bar-chart__value">{{ point.value }}</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row g-3">
+  <div class="col-lg-4">
+    <div class="card-surface p-3">
+      <h6 class="mb-3">Latest Employees</h6>
+      @for (emp of latestEmployees(); track emp.id) {
+      <div class="list-row">
+        <div class="list-row__avatar">{{ emp.firstName[0] }}{{ emp.lastName[0] }}</div>
+        <div>
+          <div class="list-row__title">{{ emp.firstName }} {{ emp.lastName }}</div>
+          <div class="list-row__subtitle">{{ emp.jobTitle }}</div>
+        </div>
+      </div>
+      } @empty {
+      <p class="text-muted small mb-0">No employees yet.</p>
+      }
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card-surface p-3">
+      <h6 class="mb-3">Latest Users</h6>
+      @for (user of latestUsers(); track user.id) {
+      <div class="list-row">
+        <div class="list-row__avatar">{{ user.name[0] }}</div>
+        <div>
+          <div class="list-row__title">{{ user.name }}</div>
+          <div class="list-row__subtitle">{{ user.email }}</div>
+        </div>
+      </div>
+      } @empty {
+      <p class="text-muted small mb-0">No users yet.</p>
+      }
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card-surface p-3">
+      <h6 class="mb-3">Latest Activity</h6>
+      @for (activity of latestActivity(); track activity.id) {
+      <div class="activity-row">
+        <i class="bi bi-clock-history"></i>
+        <div>
+          <strong>{{ activity.actorName }}</strong> {{ activity.action }}
+          <span class="text-primary">{{ activity.targetName }}</span>
+        </div>
+      </div>
+      } @empty {
+      <p class="text-muted small mb-0">No recent activity.</p>
+      }
+    </div>
+  </div>
+</div>
+}

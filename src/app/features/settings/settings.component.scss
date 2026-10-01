@@ -1,0 +1,32 @@
+.form-check-input {
+  cursor: pointer;
+  background-color: rgba(148, 163, 184, 0.3);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.form-check-input:checked {
+  background-color: var(--app-accent, #38bdf8);
+  border-color: var(--app-accent, #38bdf8);
+  box-shadow: 0 0 0 0.2rem rgba(56, 189, 248, 0.22);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(56, 189, 248, 0.24);
+}
+
+.card-surface {
+  background: var(--app-surface);
+  color: var(--app-text);
+  border-color: var(--app-border);
+}
+
+.form-control,
+.form-select {
+  background-color: rgba(248, 251, 255, 0.04);
+  color: var(--app-text);
+  border-color: var(--app-border);
+}
+
+.form-control::placeholder {
+  color: var(--app-text-muted);
+}

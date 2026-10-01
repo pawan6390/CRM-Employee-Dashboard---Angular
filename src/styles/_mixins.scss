@@ -1,0 +1,37 @@
+@use 'variables' as v;
+
+@mixin respond-above($breakpoint) {
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @media (max-width: $breakpoint - 1px) {
+    @content;
+  }
+}
+
+
+@mixin card-surface {
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: v.$radius-lg;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  color: var(--app-text);
+}
+
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+@mixin flex-center($gap: 0.5rem) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}

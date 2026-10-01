@@ -1,0 +1,113 @@
+<div class="page-heading">
+  <h1>{{ pageTitle() }}</h1>
+  <a routerLink="/employees" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i> Back to list
+  </a>
+</div>
+
+@if (loading()) {
+<div class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+} @else {
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="card-surface p-4">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">First name</label>
+      <input type="text" class="form-control" formControlName="firstName"
+        [class.is-invalid]="f.firstName.invalid && f.firstName.touched" />
+      @if (f.firstName.invalid && f.firstName.touched) {
+      <div class="form-error">First name is required.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Last name</label>
+      <input type="text" class="form-control" formControlName="lastName"
+        [class.is-invalid]="f.lastName.invalid && f.lastName.touched" />
+      @if (f.lastName.invalid && f.lastName.touched) {
+      <div class="form-error">Last name is required.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" formControlName="email"
+        [class.is-invalid]="f.email.invalid && f.email.touched" />
+      @if (f.email.invalid && f.email.touched) {
+      <div class="form-error">Enter a valid email address.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Phone</label>
+      <input type="text" class="form-control" formControlName="phone" placeholder="+1-555-0100"
+        [class.is-invalid]="f.phone.invalid && f.phone.touched" />
+      @if (f.phone.invalid && f.phone.touched) {
+      <div class="form-error">Enter a valid phone number.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Job title</label>
+      <input type="text" class="form-control" formControlName="jobTitle"
+        [class.is-invalid]="f.jobTitle.invalid && f.jobTitle.touched" />
+      @if (f.jobTitle.invalid && f.jobTitle.touched) {
+      <div class="form-error">Job title is required.</div>
+      }
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Department</label>
+      <select class="form-select" formControlName="departmentId"
+        [class.is-invalid]="f.departmentId.invalid && f.departmentId.touched">
+        <option [ngValue]="null" disabled>Select a department</option>
+        @for (dept of departments(); track dept.id) {
+        <option [ngValue]="dept.id">{{ dept.name }}</option>
+        }
+      </select>
+      @if (f.departmentId.invalid && f.departmentId.touched) {
+      <div class="form-error">Please select a department.</div>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Status</label>
+      <select class="form-select" formControlName="status">
+        <option [ngValue]="EmployeeStatus.Active">Active</option>
+        <option [ngValue]="EmployeeStatus.OnLeave">On Leave</option>
+        <option [ngValue]="EmployeeStatus.Terminated">Terminated</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Salary (USD)</label>
+      <input type="number" class="form-control" formControlName="salary" min="0"
+        [class.is-invalid]="f.salary.invalid && f.salary.touched" />
+      @if (f.salary.invalid && f.salary.touched) {
+      <div class="form-error">Enter a valid salary.</div>
+      }
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Hire date</label>
+      <input type="date" class="form-control" formControlName="hireDate"
+        [class.is-invalid]="f.hireDate.invalid && f.hireDate.touched" />
+      @if (f.hireDate.invalid && f.hireDate.touched) {
+      <div class="form-error">Hire date is required.</div>
+      }
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <a routerLink="/employees" class="btn btn-outline-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary" [disabled]="submitting()">
+      @if (submitting()) {
+      <span class="spinner-border spinner-border-sm me-2"></span> Saving...
+      } @else {
+      Save employee
+      }
+    </button>
+  </div>
+</form>
+}

@@ -1,0 +1,37 @@
+<nav class="app-navbar navbar navbar-expand">
+  <button class="btn btn-icon" type="button" (click)="toggleSidebar.emit()" aria-label="Toggle sidebar">
+    <i class="bi bi-list fs-4"></i>
+  </button>
+
+  <a routerLink="/dashboard" class="app-navbar__brand">
+    <i class="bi bi-kanban-fill"></i>
+    <span>CRM Dashboard</span>
+  </a>
+
+  <div class="app-navbar__spacer"></div>
+
+  <div class="app-navbar__user" appClickOutside (appClickOutside)="closeMenu()">
+    <button type="button" class="app-navbar__user-btn" (click)="toggleMenu()">
+      <img
+        [src]="currentUser()?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + (currentUser()?.name || 'U')"
+        alt="Avatar" class="app-navbar__avatar" />
+      <span class="d-none d-md-inline">{{ currentUser()?.name }}</span>
+      <i class="bi bi-chevron-down small"></i>
+    </button>
+
+    @if (menuOpen()) {
+    <div class="app-navbar__dropdown">
+      <a routerLink="/profile" class="dropdown-item-custom" (click)="closeMenu()">
+        <i class="bi bi-person"></i> Profile
+      </a>
+      <a routerLink="/settings" class="dropdown-item-custom" (click)="closeMenu()">
+        <i class="bi bi-gear"></i> Settings
+      </a>
+      <hr class="my-1" />
+      <button type="button" class="dropdown-item-custom text-danger" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+    }
+  </div>
+</nav>

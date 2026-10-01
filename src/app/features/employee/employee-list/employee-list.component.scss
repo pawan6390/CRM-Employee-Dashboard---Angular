@@ -1,0 +1,45 @@
+th[role='button'] {
+  user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.table-responsive {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .table-toolbar {
+    gap: 0.6rem;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 0;
+  }
+
+  .table td {
+    border: 0;
+    padding: 0.25rem 0;
+  }
+
+  .table td:last-child {
+    padding-top: 0.6rem;
+  }
+}

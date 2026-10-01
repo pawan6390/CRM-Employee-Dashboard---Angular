@@ -1,0 +1,88 @@
+<div class="page-heading">
+  <h1>Employees</h1>
+  <a routerLink="/employees/new" class="btn btn-primary">
+    <i class="bi bi-plus-lg"></i> Add Employee
+  </a>
+</div>
+
+<div class="card-surface p-3">
+  <div class="table-toolbar">
+    <input type="text" class="form-control search-input" placeholder="Search by name or email..."
+      [ngModel]="searchTerm()" (ngModelChange)="onSearchChange($event)" />
+
+    <select class="form-select w-auto" [ngModel]="departmentFilter()"
+      (ngModelChange)="departmentFilter.set($event); onFilterChange()">
+      <option [ngValue]="null">All Departments</option>
+      @for (dept of departments(); track dept.id) {
+      <option [ngValue]="dept.id">{{ dept.name }}</option>
+      }
+    </select>
+
+    <select class="form-select w-auto" [ngModel]="statusFilter()"
+      (ngModelChange)="statusFilter.set($event); onFilterChange()">
+      <option [ngValue]="null">All Statuses</option>
+      <option [ngValue]="EmployeeStatus.Active">Active</option>
+      <option [ngValue]="EmployeeStatus.OnLeave">On Leave</option>
+      <option [ngValue]="EmployeeStatus.Terminated">Terminated</option>
+    </select>
+
+    <div class="ms-auto text-muted small">{{ totalItems() }} employees</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th role="button" (click)="onSort('firstName')">Name <i class="bi bi-arrow-down-up small"></i></th>
+          <th role="button" (click)="onSort('jobTitle')">Job Title <i class="bi bi-arrow-down-up small"></i></th>
+          <th>Department</th>
+          <th role="button" (click)="onSort('status')">Status <i class="bi bi-arrow-down-up small"></i></th>
+          <th role="button" (click)="onSort('hireDate')">Hire Date <i class="bi bi-arrow-down-up small"></i></th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (loading()) {
+        <tr>
+          <td colspan="6" class="text-center py-4">
+            <div class="spinner-border spinner-border-sm text-primary"></div>
+          </td>
+        </tr>
+        } @else {
+        @for (emp of employees(); track emp.id) {
+        <tr>
+          <td>
+            <a [routerLink]="['/employees', emp.id]" class="fw-semibold text-decoration-none">
+              {{ emp.firstName }} {{ emp.lastName }}
+            </a>
+            <div class="text-muted small">{{ emp.email }}</div>
+          </td>
+          <td>{{ emp.jobTitle }}</td>
+          <td>{{ emp.departmentName || '—' }}</td>
+          <td><span [class]="statusBadgeClass(emp.status)">{{ emp.status }}</span></td>
+          <td>{{ emp.hireDate | date: 'mediumDate' }}</td>
+          <td class="text-end">
+            <a [routerLink]="['/employees', emp.id, 'edit']" class="btn btn-sm btn-outline-secondary me-1">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="confirmDelete(emp)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="6" class="text-center text-muted py-4">No employees found.</td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination [currentPage]="page()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)" />
+</div>
+
+<app-confirm-dialog [visible]="!!deleteTarget()" title="Delete employee"
+  [message]="'Delete ' + (deleteTarget()?.firstName ?? '') + ' ' + (deleteTarget()?.lastName ?? '') + '? This cannot be undone.'"
+  (confirmed)="performDelete()" (cancelled)="cancelDelete()" />

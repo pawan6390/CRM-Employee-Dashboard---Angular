@@ -1,0 +1,101 @@
+<div class="page-heading">
+  <h1>My Profile</h1>
+</div>
+
+<div class="row g-3">
+
+  <div class="col-lg-4">
+    <div class="card-surface p-4 text-center">
+      <img
+        [src]="currentUser()?.avatarUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=' + (currentUser()?.name || 'U')"
+        alt="Avatar" class="profile-avatar mb-3" />
+      <h5 class="mb-1">{{ currentUser()?.name }}</h5>
+      <p class="text-muted small mb-3">{{ currentUser()?.email }}</p>
+
+      <label class="btn btn-outline-primary w-100 mb-0">
+        @if (avatarUploading()) {
+        <span class="spinner-border spinner-border-sm me-2"></span> Uploading...
+        } @else {
+        <i class="bi bi-upload"></i> Upload new photo
+        }
+        <input type="file" accept="image/*" class="d-none" (change)="onAvatarSelected($event)"
+          [disabled]="avatarUploading()" />
+      </label>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+
+    <div class="card-surface p-4 mb-3">
+      <h6 class="mb-3">Profile Information</h6>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full name</label>
+            <input type="text" class="form-control" formControlName="name"
+              [class.is-invalid]="pf.name.invalid && pf.name.touched" />
+            @if (pf.name.invalid && pf.name.touched) {
+            <div class="form-error">Full name is required.</div>
+            }
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email"
+              [class.is-invalid]="pf.email.invalid && pf.email.touched" />
+            @if (pf.email.invalid && pf.email.touched) {
+            <div class="form-error">Enter a valid email address.</div>
+            }
+          </div>
+        </div>
+        <div class="text-end mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="profileSubmitting()">
+            @if (profileSubmitting()) {
+            <span class="spinner-border spinner-border-sm me-2"></span> Saving...
+            } @else {
+            Save changes
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="card-surface p-4">
+      <h6 class="mb-3">Change Password</h6>
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Current password</label>
+            <input type="password" class="form-control" formControlName="currentPassword"
+              [class.is-invalid]="cf.currentPassword.invalid && cf.currentPassword.touched" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">New password</label>
+            <input type="password" class="form-control" formControlName="newPassword"
+              [class.is-invalid]="cf.newPassword.invalid && cf.newPassword.touched" />
+            @if (cf.newPassword.invalid && cf.newPassword.touched) {
+            <div class="form-error">Min 8 chars, uppercase, lowercase, digit.</div>
+            }
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Confirm new password</label>
+            <input type="password" class="form-control" formControlName="confirmPassword"
+              [class.is-invalid]="passwordForm.errors?.['fieldsMismatch'] && cf.confirmPassword.touched" />
+            @if (passwordForm.errors?.['fieldsMismatch'] && cf.confirmPassword.touched) {
+            <div class="form-error">Passwords do not match.</div>
+            }
+          </div>
+        </div>
+        <div class="text-end mt-3">
+          <button type="submit" class="btn btn-primary" [disabled]="passwordSubmitting()">
+            @if (passwordSubmitting()) {
+            <span class="spinner-border spinner-border-sm me-2"></span> Updating...
+            } @else {
+            Update password
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

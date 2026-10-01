@@ -1,0 +1,18 @@
+:root,
+[data-theme='light'] {
+  --app-bg: #f4f7fb;
+  --app-surface: #ffffff;
+  --app-text: #0f172a;
+  --app-text-muted: #64748b;
+  --app-border: #dfe7f2;
+}
+
+[data-theme='dark'] {
+  --app-bg: #050b16;
+  --app-surface: #0f172a;
+  --app-text: #f8fbff;
+  --app-text-muted: #8da0bb;
+  --app-border: #223449;
+  --app-accent: #38bdf8;
+  --app-accent-soft: rgba(56, 189, 248, 0.18);
+}

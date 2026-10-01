@@ -1,0 +1,115 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+@use 'styles/themes';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 28%),
+    var(--app-bg);
+  color: var(--app-text);
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  min-height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--app-accent, v.$color-primary), v.$color-primary-dark);
+  border: 0;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.03);
+}
+
+.card-surface {
+  @include m.card-surface;
+  border: 1px solid rgba(229, 231, 235, 0.7);
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+}
+
+.text-truncate-1 {
+  @include m.text-truncate;
+}
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: v.$radius-lg;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--app-text);
+  }
+}
+
+.table-toolbar {
+  @include m.flex-center(0.75rem);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+
+  .search-input {
+    max-width: 320px;
+    min-width: 220px;
+  }
+}
+
+.status-badge {
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  &--active { background: rgba(22, 163, 74, 0.12); color: v.$color-success; }
+  &--on-leave { background: rgba(245, 158, 11, 0.12); color: v.$color-warning; }
+  &--terminated { background: rgba(220, 38, 38, 0.12); color: v.$color-danger; }
+}
+
+.form-error {
+  color: v.$color-danger;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 767.98px) {
+  .page-heading {
+    padding: 1rem;
+  }
+
+  .table-toolbar {
+    align-items: stretch;
+  }
+
+  .table-toolbar .search-input,
+  .table-toolbar .form-select {
+    width: 100%;
+    max-width: none;
+  }
+}

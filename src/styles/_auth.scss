@@ -1,0 +1,49 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.2), transparent 28%),
+    linear-gradient(135deg, var(--app-accent), var(--app-bg));
+  padding: 1.5rem;
+}
+
+.auth-card {
+  @include m.card-surface;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+
+  &__brand {
+    @include m.flex-center(0.5rem);
+    color: var(--app-accent);
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--app-text);
+  }
+
+  &__footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--app-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .form-control,
+  .form-select {
+    background-color: var(--app-surface);
+    color: var(--app-text);
+    border-color: var(--app-border);
+  }
+}

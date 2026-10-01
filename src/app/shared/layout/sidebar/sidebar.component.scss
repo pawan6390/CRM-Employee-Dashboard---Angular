@@ -1,0 +1,60 @@
+@use '../../../../styles/variables' as v;
+
+.app-sidebar {
+  position: fixed;
+  top: v.$navbar-height;
+  left: 0;
+  bottom: 0;
+  width: v.$sidebar-width;
+  background: var(--app-surface);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--app-border);
+  overflow-y: auto;
+  transition: width 0.2s ease;
+  z-index: 1020;
+  box-shadow: 6px 0 24px rgba(15, 23, 42, 0.04);
+
+  &--collapsed {
+    width: v.$sidebar-width-collapsed;
+  }
+
+  &__nav {
+    list-style: none;
+    margin: 0;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: v.$radius-md;
+    color: var(--app-text-muted);
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    &:hover {
+      background: var(--app-accent-soft, rgba(79, 70, 229, 0.08));
+      color: var(--app-text);
+    }
+
+    &.active {
+      background: linear-gradient(90deg, var(--app-accent-soft, rgba(79, 70, 229, 0.14)), rgba(79, 70, 229, 0.08));
+      color: var(--app-accent, v.$color-primary);
+    }
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+}

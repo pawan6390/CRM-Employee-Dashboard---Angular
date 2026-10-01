@@ -1,0 +1,134 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+.stat-card {
+  @include m.flex-center(1rem);
+  padding: 1.2rem;
+  border-radius: v.$radius-lg;
+  min-height: 112px;
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: v.$radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+
+  &__value {
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__label {
+    color: v.$color-text-muted;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+  }
+}
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 92px 1fr 34px;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  &__label {
+    @include m.text-truncate;
+    color: v.$color-text-muted;
+  }
+
+  &__track {
+    background: v.$color-bg;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    background: linear-gradient(90deg, v.$color-primary, #818cf8);
+    border-radius: 999px;
+
+    &--alt {
+      background: linear-gradient(90deg, v.$color-info, #67e8f9);
+    }
+  }
+
+  &__value {
+    text-align: right;
+    font-weight: 700;
+    color: v.$color-text;
+  }
+}
+
+.list-row {
+  @include m.flex-center(0.75rem);
+  padding: 0.65rem 0;
+  border-bottom: 1px solid v.$color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.14), rgba(8, 145, 178, 0.12));
+    color: v.$color-primary;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  &__subtitle {
+    color: v.$color-text-muted;
+    font-size: 0.8rem;
+  }
+}
+
+.activity-row {
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid v.$color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  i {
+    color: v.$color-primary;
+    margin-top: 0.15rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .bar-chart__row {
+    grid-template-columns: 72px 1fr 28px;
+  }
+}

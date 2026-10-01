@@ -1,0 +1,56 @@
+<div class="page-heading">
+  <h1>Employee Details</h1>
+  <a routerLink="/employees" class="btn btn-outline-secondary">
+    <i class="bi bi-arrow-left"></i> Back to list
+  </a>
+</div>
+
+@if (loading()) {
+<div class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+}
+
+@if (!loading() && employee(); as emp) {
+<div class="card-surface p-4">
+  <div class="d-flex align-items-center gap-3 mb-4">
+    <div class="employee-avatar">{{ emp.firstName[0] }}{{ emp.lastName[0] }}</div>
+    <div>
+      <h4 class="mb-1">{{ emp.firstName }} {{ emp.lastName }}</h4>
+      <span [class]="statusBadgeClass(emp.status)">{{ emp.status }}</span>
+    </div>
+    <div class="ms-auto">
+      <a [routerLink]="['/employees', emp.id, 'edit']" class="btn btn-primary">
+        <i class="bi bi-pencil"></i> Edit
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="detail-label">Email</div>
+      <div class="detail-value">{{ emp.email }}</div>
+    </div>
+    <div class="col-md-6">
+      <div class="detail-label">Phone</div>
+      <div class="detail-value">{{ emp.phone }}</div>
+    </div>
+    <div class="col-md-6">
+      <div class="detail-label">Job Title</div>
+      <div class="detail-value">{{ emp.jobTitle }}</div>
+    </div>
+    <div class="col-md-6">
+      <div class="detail-label">Department</div>
+      <div class="detail-value">{{ emp.departmentName || '—' }}</div>
+    </div>
+    <div class="col-md-6">
+      <div class="detail-label">Salary</div>
+      <div class="detail-value">{{ emp.salary | currency }}</div>
+    </div>
+    <div class="col-md-6">
+      <div class="detail-label">Hire Date</div>
+      <div class="detail-value">{{ emp.hireDate | date: 'longDate' }}</div>
+    </div>
+  </div>
+</div>
+}

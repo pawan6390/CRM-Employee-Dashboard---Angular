@@ -1,0 +1,15 @@
+.page-link {
+  cursor: pointer;
+  border-radius: 0.6rem;
+  margin: 0 0.15rem;
+  min-width: 2.4rem;
+}
+
+.page-item.active .page-link {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  border-color: #4f46e5;
+}
+
+.page-item.disabled .page-link {
+  opacity: 0.6;
+}

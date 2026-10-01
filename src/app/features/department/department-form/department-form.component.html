@@ -1,0 +1,51 @@
+<div class="page-heading">
+  <h1>{{ pageTitle() }}</h1>
+  <a routerLink="/departments" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to list</a>
+</div>
+
+@if (loading()) {
+<div class="text-center py-5">
+  <div class="spinner-border text-primary"></div>
+</div>
+} @else {
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="card-surface p-4" style="max-width: 560px;">
+  <div class="mb-3">
+    <label class="form-label">Department name</label>
+    <input type="text" class="form-control" formControlName="name"
+      [class.is-invalid]="f.name.invalid && f.name.touched" />
+    @if (f.name.invalid && f.name.touched) {
+    <div class="form-error">Department name is required.</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Code</label>
+    <input type="text" class="form-control text-uppercase" formControlName="code" placeholder="ENG"
+      [class.is-invalid]="f.code.invalid && f.code.touched" />
+    @if (f.code.invalid && f.code.touched) {
+    <div class="form-error">Code is required (max 10 characters).</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Manager</label>
+    <select class="form-select" formControlName="managerId">
+      <option [ngValue]="null">No manager assigned</option>
+      @for (mgr of managers(); track mgr.id) {
+      <option [ngValue]="mgr.id">{{ mgr.name }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <a routerLink="/departments" class="btn btn-outline-secondary">Cancel</a>
+    <button type="submit" class="btn btn-primary" [disabled]="submitting()">
+      @if (submitting()) {
+      <span class="spinner-border spinner-border-sm me-2"></span> Saving...
+      } @else {
+      Save department
+      }
+    </button>
+  </div>
+</form>
+}

@@ -1,0 +1,12 @@
+<aside class="app-sidebar" [class.app-sidebar--collapsed]="collapsed()">
+  <ul class="app-sidebar__nav">
+    @for (item of navItems(); track item.route) {
+    <li>
+      <a [routerLink]="item.route" routerLinkActive="active" class="app-sidebar__link">
+        <i class="bi" [class]="item.icon"></i>
+        <span class="app-sidebar__label" [class.d-none]="collapsed()">{{ item.label }}</span>
+      </a>
+    </li>
+    }
+  </ul>
+</aside>
